@@ -3,6 +3,7 @@ const algorithmiaApiKey = require("../credentials/algorithmia.json").apiKey;
 const sentenceBoundaryDetection = require("sbd");
 const watsonApiKey = require("../credentials/whatson-nlu.json").apikey;
 const NaturalLanguageUnderstandingV1 = require("watson-developer-cloud/natural-language-understanding/v1.js");
+const state = require("./state");
 
 const nlu = new NaturalLanguageUnderstandingV1({
   iam_apikey: watsonApiKey,
@@ -11,12 +12,14 @@ const nlu = new NaturalLanguageUnderstandingV1({
     "https://gateway-syd.watsonplatform.net/natural-language-understanding/api"
 });
 
-async function robot(content) {
+async function robot() {
+  const content = state.load();
   await fetchContentFromWikipedia(content);
   sanitizeContent(content);
   breakContentIntoSentences(content);
   limitMaximumSentences(content);
   await fetchKeywordsOfAllSentences(content);
+  state.save(content);
 
   async function fetchContentFromWikipedia(content) {
     const algorithmiaAuthenticated = algorithmia(algorithmiaApiKey);
