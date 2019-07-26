@@ -13,6 +13,5 @@ async function start() {
   await robots.image();
   await robots.video();
   await robots.youtube();
-}
 
 start();
