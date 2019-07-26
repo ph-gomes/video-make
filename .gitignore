@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
 
 # Runtime data
 pids
@@ -67,6 +68,3 @@ typings/
 content.json
 content/*.png
 content/*.jpg
-content/*.mp4
-content/*.mov
-content/*.js
